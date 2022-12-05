@@ -1,8 +1,5 @@
 terraform {
   required_providers {
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-    }
     kind = {
       source = "unicell/kind"
       version = "0.0.2-u2"
