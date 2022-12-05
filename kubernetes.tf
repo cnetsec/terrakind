@@ -12,6 +12,7 @@ resource "kind_cluster" "default" {
 
 resource "null_resource" "kubernetesgoat" {
  depends_on = [kind_cluster.default]
+
  provisioner "local-exec" {
     command = "chmod +x setup-kubernetes-goat.sh"
         }
@@ -19,9 +20,11 @@ resource "null_resource" "kubernetesgoat" {
     command = "setup-kubernetes-goat.sh"
     interpreter = ["bash"]
         }
+}
+resource "null_resource" "access" {
+ depends_on = [null_resource.kubernetesgoat]
  provisioner "local-exec"{
     command = "access-kubernetes-goat.sh"
     interpreter = ["bash"]
         }
-
 }
