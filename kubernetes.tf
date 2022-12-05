@@ -7,18 +7,21 @@ terraform {
   }
 }
 resource "kind_cluster" "default" {
-    name = "test-cluster"
+    name = "kubernetes-goat-cluster"
 }
 
 resource "null_resource" "kubernetesgoat" {
-
+ depends_on = [kind_cluster.default]
  provisioner "local-exec" {
     command = "chmod +x setup-kubernetes-goat.sh"
-  }
+        }
  provisioner "local-exec" {
-    command = "bash setup-kubernetes-goat.sh"
-  }
- provisioner "local-exec" {
-    command = "bash access-kubernetes-goat.sh"
-  }
+    command = "setup-kubernetes-goat.sh"
+    interpreter = ["bash"]
+        }
+ provisioner "local-exec"{
+    command = "access-kubernetes-goat.sh"
+    interpreter = ["bash"]
+        }
+
 }
